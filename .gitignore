@@ -1,0 +1,13 @@
+# Temporary & Cache
+.DS_Store
+Thumbs.db
+*.log
+git_check.php
+git_push.php
+tunnel.php
+test_*.php
+scratch_*.php
+
+# IDE
+.idea/
+.vscode/
