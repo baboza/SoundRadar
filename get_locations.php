@@ -37,9 +37,10 @@ try {
     $params = [];
 
     // Optional category filtering (Supports both single or multi-category users)
-    if ($category !== 'all' && in_array($category, ['maker', 'player', 'shop'])) {
-        $sql .= " AND (category = :category OR FIND_IN_SET(:category, category) > 0 OR category LIKE :category_like)";
+    if ($category !== 'all' && in_array($category, ['maker', 'player', 'shop', 'learning_center'])) {
+        $sql .= " AND (category = :category OR FIND_IN_SET(:category_set, category) > 0 OR category LIKE :category_like)";
         $params[':category'] = $category;
+        $params[':category_set'] = $category;
         $params[':category_like'] = "%{$category}%";
     }
 
@@ -52,15 +53,17 @@ try {
     // Map and enrich data for frontend Leaflet.js
     $locations = array_map(function($row) {
         $categoryNames = [
-            'maker'  => 'ช่างแคน (Khaen Maker)',
-            'player' => 'หมอแคน (Khaen Player)',
-            'shop'   => 'ร้านขายแคน (Khaen Shop)'
+            'maker'           => 'ช่างแคน (Khaen Maker)',
+            'player'          => 'หมอแคน (Khaen Player)',
+            'shop'            => 'ร้านขายแคน (Khaen Shop)',
+            'learning_center' => 'ศูนย์การเรียนรู้แคน (Learning Center)'
         ];
 
         $categoryColors = [
-            'maker'  => '#d97706', // Warm amber / bamboo wood
-            'player' => '#1e3a8a', // Deep indigo / Mo-hom
-            'shop'   => '#c2410c'  // Terracotta
+            'maker'           => '#d97706', // Warm amber / bamboo wood
+            'player'          => '#1e3a8a', // Deep indigo / Mo-hom
+            'shop'            => '#c2410c', // Terracotta
+            'learning_center' => '#059669'  // Emerald / Forest Green
         ];
 
         return [

@@ -1,10 +1,11 @@
 -- Database Schema for Khaen Community Web Application
--- Database: khaen_community (or soundradar)
+-- Database: khaen_community (or khaen_complex_center)
 
 CREATE DATABASE IF NOT EXISTS `khaen_community` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 USE `khaen_community`;
 
 -- Drop existing tables if needed
+DROP TABLE IF EXISTS `user_reviews`;
 DROP TABLE IF EXISTS `marketplace_items`;
 DROP TABLE IF EXISTS `users`;
 
@@ -17,8 +18,8 @@ CREATE TABLE `users` (
     `password` VARCHAR(255) DEFAULT NULL, -- Hashed password (or NULL for Google SSO)
     `google_id` VARCHAR(100) DEFAULT NULL,
     `role` ENUM('admin', 'user') DEFAULT 'user',
-    `category` ENUM('maker', 'player', 'shop') NOT NULL DEFAULT 'player', 
-    -- maker: ช่างแคน, player: หมอแคน, shop: ร้านขายแคน
+    `category` VARCHAR(150) NOT NULL DEFAULT 'player', 
+    -- maker: ช่างแคน, player: หมอแคน, shop: ร้านขายแคน, learning_center: ศูนย์การเรียนรู้แคน
     `title_desc` VARCHAR(255) DEFAULT NULL, -- e.g. "ช่างแคนลายโบราณ 50 ปี", "หมอแคนรับงานแห่/คอนเสิร์ต"
     `bio` TEXT DEFAULT NULL,
     `avatar` VARCHAR(255) DEFAULT 'assets/images/default-avatar.png',
@@ -60,7 +61,7 @@ CREATE INDEX `idx_marketplace_status` ON `marketplace_items`(`status`);
 -- -----------------------------------------------------------------------------
 
 INSERT INTO `users` (`id`, `name`, `email`, `phone`, `role`, `category`, `title_desc`, `bio`, `avatar`, `address`, `province`, `latitude`, `longitude`, `is_verified`) VALUES
-(1, 'แอดมิน ชุมชนคนรักแคน', 'admin@soundradar.local', '081-000-0001', 'admin', 'player', 'ผู้ดูแลระบบ & หมอแคนอิสระ', 'ดูแลระบบและเผยแพร่วัฒนธรรมดนตรีแคนอีสาน', 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80', 'อ.เมือง', 'ขอนแก่น', 16.4322, 102.8236, 1),
+(1, 'แอดมิน ชุมชนคนรักแคน', 'admin@khaencomplex.local', '081-000-0001', 'admin', 'player', 'ผู้ดูแลระบบ & หมอแคนอิสระ', 'ดูแลระบบและเผยแพร่วัฒนธรรมดนตรีแคนอีสาน', 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80', 'อ.เมือง', 'ขอนแก่น', 16.4322, 102.8236, 1),
 
 (2, 'ช่างพ่อบุญมี สืบสานลายแคน', 'boonmee@maker.local', '089-123-4567', 'user', 'maker', 'ปรมาจารย์ช่างแคนไม้กู่แคน ลิ้นเงินแท้', 'ทำแคนมานานกว่า 40 ปี เชี่ยวชาญแคนแปด คีย์ Am/Dm สำหรับวงหมอลำและนักสะสม', 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=400&q=80', 'บ.สีถาน ต.บ้านเป็ด อ.เมือง', 'ขอนแก่น', 16.4419, 102.7981, 1),
 
@@ -72,7 +73,8 @@ INSERT INTO `users` (`id`, `name`, `email`, `phone`, `role`, `category`, `title_
 
 (6, 'ร้านอีสานเครื่องดนตรีไทย (เฮียสมศักดิ์)', 'esanshop@shop.local', '043-221-999', 'user', 'shop', 'ศูนย์รวมแคน พิณ โหวต โปงลาง ครบวงจร', 'จำหน่ายแคนทุกขนาด ลิ้นแคนแท้ ขี้สูตร ไม้ซาง พร้อมจัดส่งทั่วประเทศและต่างประเทศ', 'https://images.unsplash.com/photo-1556742049-0a67c5574f73?auto=format&fit=crop&w=400&q=80', 'ตลาดเทศบาล 1 ถ.กลางเมือง', 'ขอนแก่น', 16.4285, 102.8361, 1),
 
-(7, 'แคนสยาม มิวสิค อุบลฯ', 'khaensiam@shop.local', '081-888-9999', 'user', 'shop', 'ร้านจำหน่ายและปรับแต่งคีย์แคนมาตรฐานสากล', 'บริการเทียบเสียงแคนจูนเนอร์ 440Hz จำหน่ายแคนคอนเสิร์ตเกรดพรีเมียม', 'https://images.unsplash.com/photo-1578357078586-491adf1aa5c7?auto=format&fit=crop&w=400&q=80', 'ต.ในเมือง อ.เมือง', 'อุบลราชธานี', 15.2287, 104.8564, 1);
+(7, 'แคนสยาม มิวสิค อุบลฯ', 'khaensiam@shop.local', '081-888-9999', 'user', 'shop', 'ร้านจำหน่ายและปรับแต่งคีย์แคนมาตรฐานสากล', 'บริการเทียบเสียงแคนจูนเนอร์ 440Hz จำหน่ายแคนคอนเสิร์ตเกรดพรีเมียม', 'https://images.unsplash.com/photo-1578357078586-491adf1aa5c7?auto=format&fit=crop&w=400&q=80', 'ต.ในเมือง อ.เมือง', 'อุบลราชธานี', 15.2287, 104.8564, 1),
+(8, 'ศูนย์การเรียนรู้ภูมิปัญญาแคนและดนตรีอีสาน', 'learning@khaencomplex.local', '043-754-321', 'user', 'learning_center', 'ศูนย์อนุรักษ์ สืบสาน และถ่ายทอดการทำแคนอีสาน', 'แหล่งเรียนรู้สำหรับเยาวชนและผู้สนใจ ศึกษาขั้นตอนการทำแคน ลายแคนโบราณ และการเทียบเสียงดนตรีพื้นบ้าน', 'https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&w=400&q=80', 'วิทยาลัยดุริยางคศิลป์ ม.มหาสารคาม ต.ขามเรียง อ.กันทรวิชัย', 'มหาสารคาม', 16.2468, 103.2502, 1);
 
 -- Mock Marketplace Items
 INSERT INTO `marketplace_items` (`id`, `user_id`, `title`, `item_type`, `key_note`, `price`, `condition_status`, `description`, `image_url`, `status`) VALUES

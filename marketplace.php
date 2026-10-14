@@ -1,6 +1,6 @@
 <?php
 /**
- * Dedicated Marketplace Page - SoundRadar
+ * Dedicated Marketplace Page - Khaen Complex Center
  * Full-screen desktop layout, advanced filters, detailed product cards and posting modal
  */
 require_once __DIR__ . '/auth_helper.php';
@@ -57,7 +57,7 @@ $totalAvailable = count($items);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ตลาดซื้อขายแคน & อุปกรณ์ดนตรีอีสาน | SoundRadar Marketplace</title>
+    <title>ตลาดซื้อขายแคน & อุปกรณ์ดนตรีอีสาน | Khaen Complex Center Marketplace</title>
 
     <!-- Tailwind CSS (CDN) -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -107,7 +107,7 @@ $totalAvailable = count($items);
                     </div>
                     <div>
                         <div class="flex items-center gap-2">
-                            <span class="text-2xl font-bold tracking-tight text-isan-indigo">SoundRadar</span>
+                            <span class="text-xl sm:text-2xl font-bold tracking-tight text-isan-indigo">Khaen Complex Center</span>
                             <span class="text-xs px-2 py-0.5 rounded-full bg-amber-100 text-amber-800 font-medium">ตลาดแคน</span>
                         </div>
                         <p class="text-xs text-gray-500">ศูนย์รวมการซื้อขายแคน ลิ้นแคน และอุปกรณ์ดนตรีอีสาน</p>
@@ -121,6 +121,9 @@ $totalAvailable = count($items);
                     </a>
                     <a href="marketplace.php" class="text-isan-terracotta font-semibold flex items-center gap-1.5 border-b-2 border-isan-terracotta pb-1">
                         <i data-lucide="shopping-bag" class="w-4 h-4"></i> ตลาดซื้อขาย (Marketplace)
+                    </a>
+                    <a href="profile.php" class="text-gray-600 hover:text-isan-terracotta transition flex items-center gap-1.5">
+                        <i data-lucide="user" class="w-4 h-4"></i> โปรไฟล์ (Profile)
                     </a>
                     <a href="index.php#about-section" class="text-gray-600 hover:text-isan-terracotta transition flex items-center gap-1.5">
                         <i data-lucide="graduation-cap" class="w-4 h-4"></i> ข้อมูลงานวิจัย
@@ -552,7 +555,7 @@ $totalAvailable = count($items);
     <footer class="bg-isan-indigo text-gray-300 py-10 mt-auto border-t border-amber-950">
         <div class="w-full px-4 sm:px-6 lg:px-10 flex flex-col sm:flex-row justify-between items-center gap-4">
             <div>
-                <p class="font-bold text-white text-base">SoundRadar Marketplace — ตลาดแคนอีสาน</p>
+                <p class="font-bold text-white text-base">Khaen Complex Center Marketplace — ตลาดแคนอีสาน</p>
                 <p class="text-xs text-gray-400 mt-1">สนับสนุนเศรษฐกิจสร้างสรรค์และภูมิปัญญาดนตรีพื้นบ้านไทย</p>
             </div>
             <div class="text-xs text-gray-400">

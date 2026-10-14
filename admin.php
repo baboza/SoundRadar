@@ -1,7 +1,7 @@
 <?php
 /**
- * Professional Admin Dashboard - SoundRadar
- * Comprehensive Enterprise-grade Control Center for SoundRadar
+ * Professional Admin Dashboard - Khaen Complex Center
+ * Comprehensive Enterprise-grade Control Center for Khaen Complex Center
  * Features:
  * - Real-time Key Metrics & Analytics breakdown
  * - Pending Pin Approval Queue with quick action & Leaflet inspection modal
@@ -22,7 +22,7 @@ if (!$currentUser || $currentUser['role'] !== 'admin') {
 <head>
     <meta charset='UTF-8'>
     <meta name='viewport' content='width=device-width, initial-scale=1.0'>
-    <title>จำกัดสิทธิ์เฉพาะผู้ดูแลระบบ | SoundRadar</title>
+    <title>จำกัดสิทธิ์เฉพาะผู้ดูแลระบบ | Khaen Complex Center</title>
     <script src='https://cdn.tailwindcss.com'></script>
     <link href='https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap' rel='stylesheet'>
     <style>body{font-family:'Prompt',sans-serif;}</style>
@@ -36,7 +36,7 @@ if (!$currentUser || $currentUser['role'] !== 'admin') {
         <p class='text-xs text-gray-500 mb-6'>คุณต้องเข้าสู่ระบบในฐานะแอดมิน เพื่อเข้าถึงระบบตรวจสอบความปลอดภัยและการอนุมัติข้อมูล</p>
         <div class='flex flex-col gap-2.5'>
             <a href='admin.php?switch_role=admin' class='w-full py-3 bg-amber-700 hover:bg-amber-800 text-white font-semibold rounded-xl text-xs sm:text-sm transition shadow-md shadow-amber-900/10'>สลับเป็นผู้ดูแลระบบ (Admin Mode)</a>
-            <a href='index.php' class='w-full py-2.5 text-xs text-gray-500 hover:text-gray-700 font-medium'>กลับหน้าหลัก SoundRadar</a>
+            <a href='index.php' class='w-full py-2.5 text-xs text-gray-500 hover:text-gray-700 font-medium'>กลับหน้าหลัก Khaen Complex Center</a>
         </div>
     </div>
 </body>
@@ -48,7 +48,7 @@ if (isset($_GET['export'])) {
     $exportType = $_GET['export'];
     if ($exportType === 'users') {
         header('Content-Type: text/csv; charset=utf-8');
-        header('Content-Disposition: attachment; filename=soundradar_users_' . date('Ymd_His') . '.csv');
+        header('Content-Disposition: attachment; filename=khaen_complex_users_' . date('Ymd_His') . '.csv');
         $output = fopen('php://output', 'w');
         fprintf($output, chr(0xEF).chr(0xBB).chr(0xBF)); // BOM for Excel UTF-8
         fputcsv($output, ['ID', 'ชื่อ-นามสกุล', 'อีเมล', 'เบอร์โทร', 'บทบาท', 'คำอธิบาย/ฉายา', 'จังหวัด', 'ที่อยู่', 'ละติจูด', 'ลองจิจูด', 'สถานะพิกัด', 'ยืนยันตัวตน', 'สถานะบัญชี', 'วันที่ลงทะเบียน']);
@@ -75,7 +75,7 @@ if (isset($_GET['export'])) {
         exit;
     } elseif ($exportType === 'market') {
         header('Content-Type: text/csv; charset=utf-8');
-        header('Content-Disposition: attachment; filename=soundradar_marketplace_' . date('Ymd_His') . '.csv');
+        header('Content-Disposition: attachment; filename=khaen_complex_marketplace_' . date('Ymd_His') . '.csv');
         $output = fopen('php://output', 'w');
         fprintf($output, chr(0xEF).chr(0xBB).chr(0xBF));
         fputcsv($output, ['ID', 'ชื่อสินค้า', 'ประเภท', 'คีย์', 'ราคา (บาท)', 'สภาพ', 'ชนิดไม้', 'ชนิดลิ้น', 'ผู้ขาย', 'สถานะ', 'วันที่ลงขาย']);
@@ -208,9 +208,10 @@ $activeTab = $_GET['tab'] ?? 'pins';
 
 // Analytics & Counter Stats
 $totalUsers = (int)$pdo->query("SELECT COUNT(*) FROM users")->fetchColumn();
-$totalMakers = (int)$pdo->query("SELECT COUNT(*) FROM users WHERE category = 'maker'")->fetchColumn();
-$totalPlayers = (int)$pdo->query("SELECT COUNT(*) FROM users WHERE category = 'player'")->fetchColumn();
-$totalShops = (int)$pdo->query("SELECT COUNT(*) FROM users WHERE category = 'shop'")->fetchColumn();
+$totalMakers = (int)$pdo->query("SELECT COUNT(*) FROM users WHERE category = 'maker' OR FIND_IN_SET('maker', category) > 0")->fetchColumn();
+$totalPlayers = (int)$pdo->query("SELECT COUNT(*) FROM users WHERE category = 'player' OR FIND_IN_SET('player', category) > 0")->fetchColumn();
+$totalShops = (int)$pdo->query("SELECT COUNT(*) FROM users WHERE category = 'shop' OR FIND_IN_SET('shop', category) > 0")->fetchColumn();
+$totalLearningCenters = (int)$pdo->query("SELECT COUNT(*) FROM users WHERE category = 'learning_center' OR FIND_IN_SET('learning_center', category) > 0")->fetchColumn();
 $totalVerified = (int)$pdo->query("SELECT COUNT(*) FROM users WHERE is_verified = 1")->fetchColumn();
 $totalSuspended = (int)$pdo->query("SELECT COUNT(*) FROM users WHERE status = 'suspended'")->fetchColumn();
 
@@ -242,7 +243,7 @@ if (!empty($userSearch)) {
     $userParams[':us'] = "%{$userSearch}%";
 }
 if ($userCategoryFilter !== 'all') {
-    $userSql .= " AND category = :ucat";
+    $userSql .= " AND (category = :ucat OR FIND_IN_SET(:ucat, category) > 0)";
     $userParams[':ucat'] = $userCategoryFilter;
 }
 if ($userStatusFilter !== 'all') {
@@ -291,7 +292,7 @@ $topProvinces = $pdo->query("
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ระบบจัดการผู้ดูแลระบบ (Admin Control Center) | SoundRadar</title>
+    <title>ระบบจัดการผู้ดูแลระบบ (Admin Control Center) | Khaen Complex Center</title>
     
     <!-- Tailwind CSS (CDN) -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -344,7 +345,7 @@ $topProvinces = $pdo->query("
                 </div>
                 <div>
                     <div class="flex items-center gap-2">
-                        <span class="font-bold text-base tracking-tight text-white">SoundRadar Admin</span>
+                        <span class="font-bold text-base tracking-tight text-white">Khaen Complex Center Admin</span>
                         <span class="text-[10px] font-bold bg-amber-500/20 text-amber-400 border border-amber-500/30 px-2 py-0.5 rounded-full">SYSTEM CONTROL</span>
                     </div>
                     <p class="text-[11px] text-gray-400 hidden sm:block">ระบบตรวจสอบความปลอดภัย การอนุมัติพิกัด และจัดการชุมชนแคน</p>
@@ -568,6 +569,10 @@ $topProvinces = $pdo->query("
                                     <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold bg-blue-100 text-blue-800">
                                         <i data-lucide="music" class="w-3 h-3"></i> หมอแคน
                                     </span>
+                                <?php elseif ($p['category'] === 'learning_center'): ?>
+                                    <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold bg-emerald-100 text-emerald-800">
+                                        <i data-lucide="graduation-cap" class="w-3 h-3"></i> ศูนย์การเรียนรู้แคน
+                                    </span>
                                 <?php else: ?>
                                     <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold bg-orange-100 text-orange-800">
                                         <i data-lucide="store" class="w-3 h-3"></i> ร้านขายแคน
@@ -628,6 +633,7 @@ $topProvinces = $pdo->query("
                         <option value="maker" <?= $userCategoryFilter === 'maker' ? 'selected' : '' ?>>ช่างทำแคน (<?= $totalMakers ?>)</option>
                         <option value="player" <?= $userCategoryFilter === 'player' ? 'selected' : '' ?>>หมอแคน (<?= $totalPlayers ?>)</option>
                         <option value="shop" <?= $userCategoryFilter === 'shop' ? 'selected' : '' ?>>ร้านขายแคน (<?= $totalShops ?>)</option>
+                        <option value="learning_center" <?= $userCategoryFilter === 'learning_center' ? 'selected' : '' ?>>ศูนย์การเรียนรู้แคน (<?= $totalLearningCenters ?>)</option>
                     </select>
                     <select name="user_status" onchange="this.form.submit()" class="text-xs px-3 py-2 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:outline-none bg-white">
                         <option value="all" <?= $userStatusFilter === 'all' ? 'selected' : '' ?>>ทุกสถานะบัญชี</option>
@@ -679,6 +685,8 @@ $topProvinces = $pdo->query("
                                     <span class="px-2.5 py-1 rounded-full text-xs font-semibold bg-amber-100 text-amber-800">ช่างทำแคน</span>
                                 <?php elseif ($u['category'] === 'player'): ?>
                                     <span class="px-2.5 py-1 rounded-full text-xs font-semibold bg-blue-100 text-blue-800">หมอแคน</span>
+                                <?php elseif ($u['category'] === 'learning_center'): ?>
+                                    <span class="px-2.5 py-1 rounded-full text-xs font-semibold bg-emerald-100 text-emerald-800">ศูนย์การเรียนรู้แคน</span>
                                 <?php else: ?>
                                     <span class="px-2.5 py-1 rounded-full text-xs font-semibold bg-orange-100 text-orange-800">ร้านขายแคน</span>
                                 <?php endif; ?>
@@ -931,6 +939,17 @@ $topProvinces = $pdo->query("
                         </div>
                         <span class="text-xs font-black text-orange-800"><?= $totalUsers > 0 ? round(($totalShops / $totalUsers) * 100, 1) : 0 ?>%</span>
                     </div>
+
+                    <div class="p-3 bg-emerald-50 rounded-2xl border border-emerald-100 flex items-center justify-between">
+                        <div class="flex items-center gap-2.5">
+                            <div class="w-8 h-8 rounded-xl bg-emerald-600 text-white flex items-center justify-center font-bold text-xs"><i data-lucide="graduation-cap" class="w-4 h-4"></i></div>
+                            <div>
+                                <h4 class="text-xs font-bold text-gray-900">ศูนย์การเรียนรู้แคน (Learning)</h4>
+                                <span class="text-[11px] text-gray-500"><?= $totalLearningCenters ?> แห่ง</span>
+                            </div>
+                        </div>
+                        <span class="text-xs font-black text-emerald-800"><?= $totalUsers > 0 ? round(($totalLearningCenters / $totalUsers) * 100, 1) : 0 ?>%</span>
+                    </div>
                 </div>
             </div>
 
@@ -961,7 +980,7 @@ $topProvinces = $pdo->query("
                 </div>
 
                 <div class="pt-6 border-t border-gray-100 flex items-center justify-between text-xs text-gray-400">
-                    <span>SoundRadar Engine v2.0</span>
+                    <span>Khaen Complex Center Engine v2.0</span>
                     <span class="text-emerald-600 font-semibold flex items-center gap-1">
                         <span class="w-2 h-2 rounded-full bg-emerald-500 inline-block"></span> พร้อมให้บริการ
                     </span>
@@ -1045,6 +1064,7 @@ $topProvinces = $pdo->query("
                             <option value="maker">ช่างทำแคน (Maker)</option>
                             <option value="player">หมอแคน (Player)</option>
                             <option value="shop">ร้านขายแคน (Shop)</option>
+                            <option value="learning_center">ศูนย์การเรียนรู้แคน (Learning Center)</option>
                         </select>
                     </div>
                 </div>
@@ -1132,7 +1152,7 @@ $topProvinces = $pdo->query("
     <footer class="bg-gray-950 text-gray-400 py-6 border-t border-gray-900 mt-auto text-xs">
         <div class="w-full px-4 sm:px-6 lg:px-10 flex flex-col sm:flex-row justify-between items-center gap-3">
             <div>
-                <strong class="text-white">SoundRadar Admin Console</strong> — ระบบจัดการและควบคุมข้อมูลดนตรีอีสาน
+                <strong class="text-white">Khaen Complex Center Admin Console</strong> — ระบบจัดการและควบคุมข้อมูลดนตรีอีสาน
             </div>
             <div>
                 Security: Protected by Admin Session Guard • UTF-8 Unicode • Leaflet & OpenStreetMap

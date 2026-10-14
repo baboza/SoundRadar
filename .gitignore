@@ -11,3 +11,7 @@ scratch_*.php
 # IDE
 .idea/
 .vscode/
+
+# Uploads
+uploads/*
+!uploads/.gitkeep

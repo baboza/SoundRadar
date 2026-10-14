@@ -15,7 +15,7 @@ if (isset($_GET['switch_role'])) {
         $_SESSION['user'] = [
             'id' => 1,
             'name' => 'แอดมิน ชุมชนคนรักแคน',
-            'email' => 'admin@soundradar.local',
+            'email' => 'admin@khaencomplex.local',
             'role' => 'admin',
             'category' => 'player',
             'avatar' => 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80',
@@ -32,6 +32,17 @@ if (isset($_GET['switch_role'])) {
             'avatar' => 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=400&q=80',
             'lat' => 16.4419,
             'lng' => 102.7981
+        ];
+    } elseif ($targetRole === 'learning_center') {
+        $_SESSION['user'] = [
+            'id' => 8,
+            'name' => 'ศูนย์การเรียนรู้ภูมิปัญญาแคนและดนตรีอีสาน',
+            'email' => 'learning@khaencomplex.local',
+            'role' => 'user',
+            'category' => 'learning_center',
+            'avatar' => 'https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&w=400&q=80',
+            'lat' => 16.2468,
+            'lng' => 103.2502
         ];
     } elseif ($targetRole === 'logout') {
         unset($_SESSION['user']);

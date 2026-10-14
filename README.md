@@ -1,9 +1,9 @@
-# SoundRadar — Khaen Community Web Application
+# Khaen Complex Center — Khaen Community Web Application
 แคนอีสาน: แพลตฟอร์มพิกัดช่างแคน หมอแคน และตลาดเครื่องดนตรีอีสาน
 
 ## สถาปัตยกรรมและโครงสร้างโปรเจกต์ (Project Structure)
 ```
-c:\xampp\htdocs\SoundRadar\
+c:\xampp_new\htdocs\sound\
 ├── schema.sql           # โครงสร้างฐานข้อมูล MySQL และข้อมูลจำลอง (Mock Data)
 ├── db.php               # ไฟล์เชื่อมต่อฐานข้อมูลด้วย PHP PDO (UTF-8, Prepared Statements)
 ├── auth_helper.php      # ระบบจำลอง Session Authentication (Mock Admin / User / Google SSO Hook)
@@ -19,12 +19,10 @@ c:\xampp\htdocs\SoundRadar\
    - เปิดโปรแกรม **XAMPP Control Panel** แล้วกด **Start** ที่โมดูล **Apache** และ **MySQL**
 
 2. **นำเข้าฐานข้อมูล MySQL:**
-   - เปิดเบราว์เซอร์ไปที่ `http://localhost/phpmyadmin/`
-   - ไปที่แท็บ **Import** หรือ **SQL**
-   - รันคำสั่งจากไฟล์ [schema.sql](file:///c:/xampp/htdocs/SoundRadar/schema.sql) เพื่อสร้างฐานข้อมูล `khaen_community` พร้อม Mock Data ทันที
+   - รันคำสั่งจากไฟล์ `setup_db.php` หรือนำเข้า `schema.sql` เพื่อสร้างฐานข้อมูล `khaen_community` พร้อม Mock Data ทันที
 
 3. **เข้าใช้งานแอปพลิเคชัน:**
-   - เข้าผ่านเว็บเบราว์เซอร์ที่: `http://localhost/SoundRadar/`
+   - เข้าผ่านเว็บเบราว์เซอร์ที่: `http://localhost/sound/`
 
 ## ฟีเจอร์หลักในระบบ
 - **งานวิจัยเพื่อพัฒนาชุมชนดนตรีอีสาน:**

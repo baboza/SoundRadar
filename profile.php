@@ -1,6 +1,6 @@
 <?php
 /**
- * User Profile Page - SoundRadar
+ * User Profile Page - Khaen Complex Center
  * Edit personal information, category (Maker/Player/Shop), bio, GPS coordinates on interactive map, and view personal listings
  */
 require_once __DIR__ . '/auth_helper.php';
@@ -361,11 +361,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_review'])) {
     
     // Reviewer name & avatar (Use current user if logged in, otherwise guest name)
     $reviewerId = $currentUser ? (int)$currentUser['id'] : null;
-    $reviewerName = $currentUser ? $currentUser['name'] : trim($_POST['reviewer_name'] ?? 'ผู้ใช้งาน SoundRadar');
+    $reviewerName = $currentUser ? $currentUser['name'] : trim($_POST['reviewer_name'] ?? 'ผู้ใช้งาน Khaen Complex Center');
     $reviewerAvatar = $currentUser ? $currentUser['avatar'] : 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=400&q=80';
 
     if (empty($reviewerName)) {
-        $reviewerName = 'ผู้ใช้งาน SoundRadar';
+        $reviewerName = 'ผู้ใช้งาน Khaen Complex Center';
     }
 
     if (empty($comment)) {
@@ -408,7 +408,7 @@ if ((int)$checkRevCount->fetchColumn() === 0 && in_array($userId, [2, 3, 4, 6, 7
             'name' => 'นิสิต เอกดนตรี ม.ขอนแก่น',
             'avatar' => 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=400&q=80',
             'rating' => 5,
-            'comment' => 'เดินทางมาตามหมุดพิกัด GPS ใน SoundRadar สะดวกมาก เข้ามาลองเป่าถึงที่ร้าน เจ้าของให้คำแนะนำเรื่องการจูนเสียงดีมากครับ'
+            'comment' => 'เดินทางมาตามหมุดพิกัด GPS ใน Khaen Complex Center สะดวกมาก เข้ามาลองเป่าถึงที่ร้าน เจ้าของให้คำแนะนำเรื่องการจูนเสียงดีมากครับ'
         ],
         [
             'target' => 3,
@@ -444,7 +444,7 @@ if ($totalReviewCount > 0) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>โปรไฟล์ผู้ใช้งาน | <?= htmlspecialchars($userData['name']) ?> - SoundRadar</title>
+    <title>โปรไฟล์ผู้ใช้งาน | <?= htmlspecialchars($userData['name']) ?> - Khaen Complex Center</title>
 
     <!-- Tailwind CSS (CDN) -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -498,7 +498,7 @@ if ($totalReviewCount > 0) {
                     </div>
                     <div>
                         <div class="flex items-center gap-2">
-                            <span class="text-2xl font-bold tracking-tight text-isan-indigo">SoundRadar</span>
+                            <span class="text-xl sm:text-2xl font-bold tracking-tight text-isan-indigo">Khaen Complex Center</span>
                             <span class="text-xs px-2 py-0.5 rounded-full bg-amber-100 text-amber-800 font-medium">โปรไฟล์</span>
                         </div>
                         <p class="text-xs text-gray-500">จัดการข้อมูลส่วนตัว พิกัดแผนที่ และประกาศขายแคน</p>
@@ -515,6 +515,9 @@ if ($totalReviewCount > 0) {
                     </a>
                     <a href="profile.php" class="text-isan-terracotta font-semibold flex items-center gap-1.5 border-b-2 border-isan-terracotta pb-1">
                         <i data-lucide="user" class="w-4 h-4"></i> โปรไฟล์ของฉัน
+                    </a>
+                    <a href="index.php#about-section" class="text-gray-600 hover:text-isan-terracotta transition flex items-center gap-1.5">
+                        <i data-lucide="graduation-cap" class="w-4 h-4"></i> ข้อมูลงานวิจัย
                     </a>
                 </nav>
 
@@ -600,6 +603,10 @@ if ($totalReviewCount > 0) {
                             <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold bg-orange-100 text-orange-800">
                                 <span class="w-1.5 h-1.5 rounded-full bg-orange-600"></span> ร้านขายแคน
                             </span>
+                        <?php elseif ($c === 'learning_center'): ?>
+                            <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold bg-emerald-100 text-emerald-800">
+                                <span class="w-1.5 h-1.5 rounded-full bg-emerald-600"></span> ศูนย์การเรียนรู้แคน
+                            </span>
                         <?php endif; endforeach; ?>
                     </div>
 
@@ -656,7 +663,7 @@ if ($totalReviewCount > 0) {
                         </div>
                         <div>
                             <h3 class="font-bold text-sm text-gray-900 leading-tight">การันตีความน่าเชื่อถือ</h3>
-                            <span class="text-[10px] text-amber-800 font-medium">SoundRadar Verified Master</span>
+                            <span class="text-[10px] text-amber-800 font-medium">Khaen Complex Center Verified Master</span>
                         </div>
                     </div>
 
@@ -1018,7 +1025,7 @@ if ($totalReviewCount > 0) {
                                     </label>
                                     
                                     <!-- Category Checklist Grid -->
-                                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
                                         <!-- Checklist 1: Maker -->
                                         <label class="relative flex items-center gap-3 p-3.5 rounded-2xl border-2 cursor-pointer transition select-none hover:bg-amber-50/50 <?= in_array('maker', $userCatArray) ? 'border-amber-500 bg-amber-50/40 text-amber-950 font-bold' : 'border-gray-200 bg-white text-gray-700' ?>">
                                             <input type="checkbox" name="categories[]" value="maker" <?= in_array('maker', $userCatArray) ? 'checked' : '' ?> class="w-4 h-4 text-amber-600 rounded focus:ring-amber-500 border-gray-300">
@@ -1057,6 +1064,20 @@ if ($totalReviewCount > 0) {
                                                 <div class="leading-tight">
                                                     <span class="text-xs block">ร้านขายแคน</span>
                                                     <span class="text-[10px] text-gray-500 font-normal">Khaen Shop</span>
+                                                </div>
+                                            </div>
+                                        </label>
+
+                                        <!-- Checklist 4: Learning Center -->
+                                        <label class="relative flex items-center gap-3 p-3.5 rounded-2xl border-2 cursor-pointer transition select-none hover:bg-emerald-50/50 <?= in_array('learning_center', $userCatArray) ? 'border-emerald-500 bg-emerald-50/40 text-emerald-950 font-bold' : 'border-gray-200 bg-white text-gray-700' ?>">
+                                            <input type="checkbox" name="categories[]" value="learning_center" <?= in_array('learning_center', $userCatArray) ? 'checked' : '' ?> class="w-4 h-4 text-emerald-600 rounded focus:ring-emerald-500 border-gray-300">
+                                            <div class="flex items-center gap-2">
+                                                <div class="w-7 h-7 rounded-lg bg-emerald-100 text-emerald-800 flex items-center justify-center shrink-0">
+                                                    <i data-lucide="graduation-cap" class="w-4 h-4"></i>
+                                                </div>
+                                                <div class="leading-tight">
+                                                    <span class="text-xs block">ศูนย์การเรียนรู้แคน</span>
+                                                    <span class="text-[10px] text-gray-500 font-normal">Learning Center</span>
                                                 </div>
                                             </div>
                                         </label>
@@ -1527,7 +1548,7 @@ if ($totalReviewCount > 0) {
     <footer class="bg-isan-indigo text-gray-300 py-10 mt-auto border-t border-amber-950">
         <div class="w-full px-4 sm:px-6 lg:px-10 flex flex-col sm:flex-row justify-between items-center gap-4">
             <div>
-                <p class="font-bold text-white text-base">SoundRadar — ชุมชนแคนอีสาน</p>
+                <p class="font-bold text-white text-base">Khaen Complex Center — ชุมชนแคนอีสาน</p>
                 <p class="text-xs text-gray-400 mt-1">โปรไฟล์สมาชิกและระบบหมุดพิกัด GPS อัจฉริยะ</p>
             </div>
             <div class="text-xs text-gray-400">

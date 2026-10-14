@@ -23,6 +23,10 @@ try {
 
     // Auto-migration checks for columns if they don't exist
     try {
+        $pdo->exec("ALTER TABLE users MODIFY COLUMN category VARCHAR(150) NOT NULL DEFAULT 'player'");
+    } catch (\Exception $ex) {}
+
+    try {
         $pdo->exec("ALTER TABLE users ADD COLUMN IF NOT EXISTS pin_status ENUM('none', 'pending', 'approved', 'rejected') DEFAULT 'approved'");
     } catch (\Exception $ex) {}
 

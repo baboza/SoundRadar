@@ -1,7 +1,7 @@
 <?php
 /**
  * Main Web Application - Clean Modern Isan Theme
- * SoundRadar: ชุมชนแคนอีสาน (Khaen Community Portal & Map)
+ * Khaen Complex Center: ชุมชนแคนอีสาน (Khaen Community Portal & Map)
  */
 require_once __DIR__ . '/auth_helper.php';
 require_once __DIR__ . '/db.php';
@@ -23,7 +23,7 @@ $marketItems = $marketQuery->fetchAll();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SoundRadar | ชุมชนคนรักแคน & ตลาดเครื่องดนตรีอีสาน</title>
+    <title>Khaen Complex Center | ชุมชนคนรักแคน & ตลาดเครื่องดนตรีอีสาน</title>
 
     <!-- Tailwind CSS (CDN) -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -89,6 +89,7 @@ $marketItems = $marketQuery->fetchAll();
         .pin-maker { background-color: #D97706; }    /* Warm Bamboo / Amber */
         .pin-player { background-color: #1E3A8A; }   /* Mo-hom Indigo */
         .pin-shop { background-color: #C2410C; }     /* Terracotta Red-Orange */
+        .pin-learning { background-color: #059669; } /* Emerald / Forest Green for Learning Center */
         .pin-user { background-color: #10B981; }     /* Emerald for user GPS */
 
         /* Leaflet popup overrides */
@@ -117,7 +118,7 @@ $marketItems = $marketQuery->fetchAll();
                     </div>
                     <div>
                         <div class="flex items-center gap-2">
-                            <span class="text-2xl font-bold tracking-tight text-isan-indigo">SoundRadar</span>
+                            <span class="text-xl sm:text-2xl font-bold tracking-tight text-isan-indigo">Khaen Complex Center</span>
                             <span class="text-xs px-2 py-0.5 rounded-full bg-amber-100 text-amber-800 font-medium">แคนอีสาน</span>
                         </div>
                         <p class="text-xs text-gray-500">แพลตฟอร์มพิกัดช่างแคน หมอแคน และตลาดเครื่องดนตรีอีสาน</p>
@@ -131,6 +132,9 @@ $marketItems = $marketQuery->fetchAll();
                     </a>
                     <a href="marketplace.php" class="text-gray-600 hover:text-isan-terracotta transition flex items-center gap-1.5">
                         <i data-lucide="shopping-bag" class="w-4 h-4"></i> ตลาดซื้อขายแคน (Marketplace)
+                    </a>
+                    <a href="profile.php" class="text-gray-600 hover:text-isan-terracotta transition flex items-center gap-1.5">
+                        <i data-lucide="user" class="w-4 h-4"></i> โปรไฟล์ (Profile)
                     </a>
                     <a href="#about-section" class="text-gray-600 hover:text-isan-terracotta transition flex items-center gap-1.5">
                         <i data-lucide="graduation-cap" class="w-4 h-4"></i> ข้อมูลงานวิจัย
@@ -193,132 +197,8 @@ $marketItems = $marketQuery->fetchAll();
         </div>
     </header>
 
-    <!-- Hero / Headline Section (Redesigned with authentic Khaen player image) -->
-    <section class="relative overflow-hidden bg-gradient-to-b from-amber-100/40 via-amber-50/30 to-isan-bg py-10 lg:py-14 border-b border-amber-900/10">
-        <!-- Subtle decorative background elements -->
-        <div class="absolute -top-24 -left-24 w-96 h-96 bg-amber-400/10 rounded-full blur-3xl pointer-events-none"></div>
-        <div class="absolute -bottom-24 -right-24 w-96 h-96 bg-orange-500/10 rounded-full blur-3xl pointer-events-none"></div>
-
-        <div class="w-full px-4 sm:px-6 lg:px-10">
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
-                
-                <!-- Left Text Column -->
-                <div class="lg:col-span-7 text-left space-y-5">
-                    <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-semibold bg-amber-500/15 text-amber-900 border border-amber-500/30 shadow-xs">
-                        <i data-lucide="sparkles" class="w-4 h-4 text-amber-700"></i>
-                        <span>มรดกเสียงดนตรีพื้นบ้านอีสานสู่โลกดิจิทัล</span>
-                    </div>
-
-                    <h1 class="text-3xl sm:text-4xl lg:text-5xl font-black text-isan-indigo tracking-tight leading-tight">
-                        ปักหมุดหมอแคน ช่างทำแคน <br>
-                        <span class="text-transparent bg-clip-text bg-gradient-to-r from-amber-700 via-amber-800 to-orange-800">
-                            และศูนย์รวมเครื่องดนตรีอีสาน
-                        </span>
-                    </h1>
-
-                    <p class="text-sm sm:text-base text-gray-700 font-normal leading-relaxed max-w-2xl">
-                        เชื่อมต่อเครือข่ายช่างแคนชั้นครู หมอแคนฝีมือเอก และร้านเครื่องดนตรีพื้นถิ่นทั่วไทย พร้อมค้นหาผู้เชี่ยวชาญใกล้ตัวคุณด้วยระบบพิกัด GPS อัจฉริยะ
-                    </p>
-
-                    <!-- Quick Action Buttons & Community Badges -->
-                    <div class="pt-2 flex flex-wrap items-center gap-3">
-                        <a href="#map-section" class="inline-flex items-center gap-2 bg-isan-terracotta hover:bg-amber-700 text-white font-semibold text-xs sm:text-sm px-5 py-3 rounded-2xl shadow-md shadow-orange-900/15 transition active:scale-95">
-                            <i data-lucide="map-pin" class="w-4 h-4"></i>
-                            <span>สำรวจแผนที่หมอแคน</span>
-                        </a>
-
-                        <button type="button" onclick="locateUserPosition()" class="inline-flex items-center gap-2 bg-white hover:bg-gray-50 text-emerald-800 border border-emerald-300 font-semibold text-xs sm:text-sm px-5 py-3 rounded-2xl shadow-sm transition active:scale-95">
-                            <i data-lucide="locate" class="w-4 h-4 text-emerald-600"></i>
-                            <span>ค้นหาใกล้ฉัน (Near Me)</span>
-                        </button>
-
-                        <a href="marketplace.php" class="inline-flex items-center gap-2 bg-gray-900 hover:bg-gray-800 text-white font-semibold text-xs sm:text-sm px-5 py-3 rounded-2xl shadow-sm transition active:scale-95">
-                            <i data-lucide="shopping-bag" class="w-4 h-4 text-amber-400"></i>
-                            <span>ตลาดซื้อขายแคน</span>
-                        </a>
-                    </div>
-
-                    <!-- Highlight Highlights Metric Bar -->
-                    <div class="pt-4 grid grid-cols-3 gap-3 border-t border-amber-900/10 max-w-lg">
-                        <div>
-                            <div class="text-xl sm:text-2xl font-black text-amber-800">100%</div>
-                            <div class="text-[11px] text-gray-500 font-medium">สืบสานภูมิปัญญาดั้งเดิม</div>
-                        </div>
-                        <div>
-                            <div class="text-xl sm:text-2xl font-black text-amber-800">GPS</div>
-                            <div class="text-[11px] text-gray-500 font-medium">พิกัดแม่นยำทุกจังหวัด</div>
-                        </div>
-                        <div>
-                            <div class="text-xl sm:text-2xl font-black text-amber-800">Verified</div>
-                            <div class="text-[11px] text-gray-500 font-medium">ตรวจสอบครูช่างตัวจริง</div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Right Photo Showcase Column (Khaen Musician Featured Card) -->
-                <div class="lg:col-span-5">
-                    <div class="relative mx-auto max-w-md lg:max-w-none">
-                        
-                        <!-- Floating Badge 1: Heritage Status -->
-                        <div class="absolute -top-3 -left-3 sm:-left-4 z-20 bg-white/95 backdrop-blur-md px-3.5 py-2 rounded-2xl border border-amber-200 shadow-lg flex items-center gap-2 animate-bounce-subtle">
-                            <div class="w-8 h-8 rounded-xl bg-amber-500 text-white flex items-center justify-center font-bold">
-                                <i data-lucide="music-2" class="w-4 h-4"></i>
-                            </div>
-                            <div>
-                                <div class="text-xs font-bold text-gray-900">เสียงแคนแดนอีสาน</div>
-                                <div class="text-[10px] text-amber-800 font-medium">มรดกภูมิปัญญาทางวัฒนธรรม</div>
-                            </div>
-                        </div>
-
-                        <!-- Main Image Container -->
-                        <div class="relative rounded-3xl overflow-hidden border-4 border-white shadow-2xl bg-gradient-to-br from-amber-900 to-amber-950 group">
-                            <img 
-                                src="https://upload.wikimedia.org/wikipedia/commons/a/a3/A_Mangkong_man_plays_khene_in_Laos.jpg" 
-                                alt="หมอแคนเป่าแคน มรดกดนตรีอีสาน" 
-                                class="w-full h-[360px] sm:h-[420px] object-cover object-top transition duration-500 group-hover:scale-105"
-                                loading="eager"
-                                onerror="this.onerror=null; this.src='https://upload.wikimedia.org/wikipedia/commons/f/ff/Khenesarong.jpg';"
-                            >
-                            
-                            <!-- Artistic Gradient Overlay & Caption -->
-                            <div class="absolute inset-0 bg-gradient-to-t from-gray-950/90 via-gray-950/20 to-transparent flex flex-col justify-end p-5 text-white">
-                                <div class="flex items-center gap-2 mb-1.5">
-                                    <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-amber-500 text-white uppercase tracking-wider">
-                                        หมอแคนพื้นถิ่น (Khaen Master)
-                                    </span>
-                                    <span class="text-[11px] text-amber-200/90 flex items-center gap-1">
-                                        <i data-lucide="volume-2" class="w-3.5 h-3.5 text-amber-400"></i> สำเนียงดั้งเดิม
-                                    </span>
-                                </div>
-                                <h3 class="text-lg sm:text-2xl font-bold text-amber-200 font-thai-traditional leading-relaxed tracking-wide">
-                                    "เสียงแคน บ่เคยสิ้นเสน่ห์ สืบสายลมแห่งวิถีไทอีสาน"
-                                </h3>
-                                <p class="text-xs text-gray-300 mt-1 font-light line-clamp-1">
-                                    เครื่องดนตรีลิ้นโลหะประกอบลำไม้กู่แคน เอกลักษณ์หนึ่งเดียวแห่งลุ่มน้ำโขง
-                                </p>
-                            </div>
-                        </div>
-
-                        <!-- Floating Badge 2: Real-time Audio Synthesizer Hook -->
-                        <div class="absolute -bottom-4 -right-3 sm:-right-4 z-20 bg-white/95 backdrop-blur-md p-3 rounded-2xl border border-amber-200 shadow-xl flex items-center gap-3">
-                            <button type="button" onclick="playKhaenSound('Am')" class="w-10 h-10 rounded-xl bg-gradient-to-br from-amber-600 to-amber-800 text-white flex items-center justify-center hover:scale-110 transition shadow-md shadow-amber-900/20 shrink-0" title="ลองฟังเสียงแคนคีย์ Am">
-                                <i data-lucide="play" class="w-5 h-5 fill-white"></i>
-                            </button>
-                            <div>
-                                <span class="text-[10px] uppercase font-bold text-gray-400 tracking-wider block">ทดลองฟังเสียงแคน</span>
-                                <span class="text-xs font-bold text-gray-900">กดฟังเสียงแคน คีย์ Am</span>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </section>
-
     <!-- Main Map Section -->
-    <section id="map-section" class="w-full px-4 sm:px-6 lg:px-10 pb-16">
+    <section id="map-section" class="w-full px-4 sm:px-6 lg:px-10 pt-6 sm:pt-8 pb-16">
         <!-- Control Center & Filter Bar (Unified Modern Design) -->
         <div class="bg-white rounded-3xl p-4 sm:p-5 shadow-sm border border-amber-900/10 mb-6 space-y-4">
             
@@ -394,6 +274,13 @@ $marketItems = $marketQuery->fetchAll();
                         <span class="w-2 h-2 rounded-full bg-orange-600"></span>
                         <span>ร้านขายแคน</span>
                         <span id="count-shop" class="px-1.5 py-0.2 rounded-full text-[10px] bg-orange-200/80 text-orange-900 font-bold">0</span>
+                    </button>
+
+                    <!-- Filter Learning Centers -->
+                    <button onclick="filterCategory('learning_center')" id="filter-learning_center" class="filter-btn inline-flex items-center gap-2 px-3.5 py-1.5 rounded-xl text-xs font-medium bg-emerald-50 text-emerald-900 hover:bg-emerald-100 border border-emerald-200/80 transition">
+                        <span class="w-2 h-2 rounded-full bg-emerald-600"></span>
+                        <span>ศูนย์การเรียนรู้แคน</span>
+                        <span id="count-learning" class="px-1.5 py-0.2 rounded-full text-[10px] bg-emerald-200/80 text-emerald-900 font-bold">0</span>
                     </button>
                 </div>
 
@@ -638,7 +525,7 @@ $marketItems = $marketQuery->fetchAll();
     <footer class="bg-isan-indigo text-gray-300 py-10 mt-auto border-t border-amber-950">
         <div class="w-full px-4 sm:px-6 lg:px-10 flex flex-col sm:flex-row justify-between items-center gap-4">
             <div>
-                <p class="font-bold text-white text-base">SoundRadar — งานวิจัยเพื่อพัฒนาชุมชนดนตรีอีสาน</p>
+                <p class="font-bold text-white text-base">Khaen Complex Center — งานวิจัยเพื่อพัฒนาชุมชนดนตรีอีสาน</p>
                 <p class="text-xs text-gray-400 mt-1">
                     โดย อาจารย์ ดร.สัญชัย ด้วงบุ้ง ภาควิชาดนตรีศึกษา วิทยาลัยดุริยางคศิลป์ มหาวิทยาลัยมหาสารคาม
                 </p>
@@ -708,6 +595,9 @@ $marketItems = $marketQuery->fetchAll();
                 } else if (item.category === 'shop') {
                     pinClass = 'pin-shop';
                     iconName = 'store';
+                } else if (item.category === 'learning_center') {
+                    pinClass = 'pin-learning';
+                    iconName = 'graduation-cap';
                 }
 
                 // Custom HTML Icon for Leaflet
@@ -849,13 +739,14 @@ $marketItems = $marketQuery->fetchAll();
 
             // Reset all filter buttons
             const styles = {
-                'all':    { active: 'bg-isan-indigo text-white shadow-sm', inactive: 'bg-gray-100 text-gray-700 hover:bg-gray-200' },
-                'maker':  { active: 'bg-amber-600 text-white shadow-sm', inactive: 'bg-amber-50 text-amber-900 hover:bg-amber-100 border border-amber-200/80' },
-                'player': { active: 'bg-blue-700 text-white shadow-sm', inactive: 'bg-blue-50 text-blue-900 hover:bg-blue-100 border border-blue-200/80' },
-                'shop':   { active: 'bg-orange-600 text-white shadow-sm', inactive: 'bg-orange-50 text-orange-900 hover:bg-orange-100 border border-orange-200/80' }
+                'all':             { active: 'bg-isan-indigo text-white shadow-sm', inactive: 'bg-gray-100 text-gray-700 hover:bg-gray-200' },
+                'maker':           { active: 'bg-amber-600 text-white shadow-sm', inactive: 'bg-amber-50 text-amber-900 hover:bg-amber-100 border border-amber-200/80' },
+                'player':          { active: 'bg-blue-700 text-white shadow-sm', inactive: 'bg-blue-50 text-blue-900 hover:bg-blue-100 border border-blue-200/80' },
+                'shop':            { active: 'bg-orange-600 text-white shadow-sm', inactive: 'bg-orange-50 text-orange-900 hover:bg-orange-100 border border-orange-200/80' },
+                'learning_center': { active: 'bg-emerald-600 text-white shadow-sm', inactive: 'bg-emerald-50 text-emerald-900 hover:bg-emerald-100 border border-emerald-200/80' }
             };
 
-            ['all', 'maker', 'player', 'shop'].forEach(cat => {
+            ['all', 'maker', 'player', 'shop', 'learning_center'].forEach(cat => {
                 const btn = document.getElementById(`filter-${cat}`);
                 if (btn) {
                     btn.className = `filter-btn inline-flex items-center gap-2 px-3.5 py-1.5 rounded-xl text-xs font-semibold transition ${cat === category ? styles[cat].active : styles[cat].inactive}`;
@@ -870,7 +761,9 @@ $marketItems = $marketQuery->fetchAll();
             const province = document.getElementById('province-filter')?.value || 'all';
 
             const filtered = allLocations.filter(loc => {
-                const matchCategory = currentCategoryFilter === 'all' || loc.category === currentCategoryFilter;
+                const matchCategory = currentCategoryFilter === 'all' || 
+                    loc.category === currentCategoryFilter || 
+                    (loc.category && loc.category.split(',').map(s => s.trim()).includes(currentCategoryFilter));
                 const matchProvince = province === 'all' || loc.province === province;
                 const matchQuery = !query || 
                     loc.name.toLowerCase().includes(query) || 
@@ -887,9 +780,13 @@ $marketItems = $marketQuery->fetchAll();
         // 5. Update category counter numbers in buttons
         function updateCounters() {
             document.getElementById('count-all').textContent = allLocations.length;
-            document.getElementById('count-maker').textContent = allLocations.filter(i => i.category === 'maker').length;
-            document.getElementById('count-player').textContent = allLocations.filter(i => i.category === 'player').length;
-            document.getElementById('count-shop').textContent = allLocations.filter(i => i.category === 'shop').length;
+            document.getElementById('count-maker').textContent = allLocations.filter(i => i.category === 'maker' || (i.category && i.category.split(',').map(s=>s.trim()).includes('maker'))).length;
+            document.getElementById('count-player').textContent = allLocations.filter(i => i.category === 'player' || (i.category && i.category.split(',').map(s=>s.trim()).includes('player'))).length;
+            document.getElementById('count-shop').textContent = allLocations.filter(i => i.category === 'shop' || (i.category && i.category.split(',').map(s=>s.trim()).includes('shop'))).length;
+            const learningCountElem = document.getElementById('count-learning');
+            if (learningCountElem) {
+                learningCountElem.textContent = allLocations.filter(i => i.category === 'learning_center' || (i.category && i.category.split(',').map(s=>s.trim()).includes('learning_center'))).length;
+            }
         }
 
         // 6. Near Me (HTML5 Geolocation API)
